@@ -3,29 +3,30 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+#ifndef GAME_H
+#define GAME_H
 
 class Game {
 private:
-  std::vector<std::vector<bool>> A_board;
-  std::vector<std::vector<bool>> B_board;
-  std::vector<std::vector<bool>>* current;
-  std::vector<std::vector<bool>>* next;
-  std::vector<std::vector<bool>>* temp;
+  std::vector<bool> A_board;
+  std::vector<bool> B_board;
+  std::vector<bool>* current;
+  std::vector<bool>* next;
+  std::vector<bool>* temp;
   int size;
 
 public:
   Game(int size) {
     // + 2 to avoid checking for edge cases.
-    this->size = size;
-    A_board = std::vector<std::vector<bool>>(
-        size + 2, 
-        std::vector<bool>(size + 2, false)
+    this->size = size + 2;
+    A_board = std::vector<bool>(
+        this->size * this->size,
+        false
       );
-    B_board = std::vector<std::vector<bool>>(
-        size + 2, 
-        std::vector<bool>(size + 2, false)
+    B_board = std::vector<bool>(
+        this->size * this->size,
+        false
       );
-
     current = &A_board;
     next = &B_board;
   }
@@ -38,7 +39,7 @@ public:
         if(i == x && j == y) {
           continue;
         }
-        if((*current)[i][j]) {
+        if((*current)[i + j * size]) {
           neighbours += 1;
         }
       }
@@ -46,11 +47,11 @@ public:
     return neighbours;
   }
   void set(int x, int y, bool val) {
-    (*current)[x][y] = val;
+    (*current)[x + y * size] = val;
   }
 
   void flip(int x, int y) {
-    (*current)[x][y] = !(*current)[x][y];
+    (*current)[x + y * size] = !(*current)[x + y * size];
   }
   
   void update() {
@@ -59,16 +60,16 @@ public:
       for(int j = 1; j <= size; j++) {
         num_neighbours = getNeighbours(i, j);
         if(num_neighbours < 2) {
-          (*next)[i][j] = false;
+          (*next)[i + j * size] = false;
         }
         else if(num_neighbours > 3) {
-          (*next)[i][j] = false;
+          (*next)[i + j * size] = false;
         }
         else if(num_neighbours == 3) {
-          (*next)[i][j] = true;
+          (*next)[i + j * size] = true;
         }
         else {
-          (*next)[i][j] = (*current)[i][j];
+          (*next)[i + j * size] = (*current)[i + j * size];
         }
       }
     }
@@ -81,15 +82,26 @@ public:
     std::string res;
     for(int i = 1; i <= size; i++) {
       for(int j = 1; j <= size; j++) {
-        res = (*current)[i][j] ? "1" : "0";
+        res = (*current)[i + j * size] ? "1" : "0";
         std::cout << res << " ";
       }
       std::cout << "\n";
     }
   }
   
-  std::vector<std::vector<bool>>* getBoard() {
+  std::vector<bool>* getBoard() {
     return current;
   }
 
+  bool getCell(int i, int j) {
+    return (*current)[(i + size + 1) + j * size];
+  }
+
+  void setCell(int i, int j, bool value) {
+    (*current)[i + size + 1 + j * size] = value;
+  }
+
 };
+
+#endif 
+
