@@ -13,10 +13,6 @@ const float SCREEN_BPP = 32;
 const float TOP_OFFSET = 50;
 const int SIZE = 50;
 
-const sf::Color HOVER(184,51,106);
-const sf::Color ACTIVE(52,52,74);
-const sf::Color BLEND(118,52,90);
-
 int main() {
   Graphics graphics(
       SCREEN_X,

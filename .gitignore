@@ -1,2 +1,5 @@
 main.o
 sfml-app
+logs
+build
+ConwaysGameOfLife

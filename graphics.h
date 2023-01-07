@@ -154,7 +154,7 @@ public:
 
     sf::Font font;
     if(!font.loadFromFile("FiraCodeNF.ttf")) {
-      std::cout << "ERROR LOADING FONTS\n";
+      std::cout << "ERROR LOADING FONTS. Can't find 'FiraCodeNF.ttf'\n";
       return;
     }
     sf::Text text;
@@ -181,7 +181,6 @@ public:
             }
           case sf::Event::MouseButtonPressed:
             if (event.mouseButton.button == sf::Mouse::Left) {
-              std::cout << "ENABLED\n";
               mouseClick = true;
               setState(position);
             }
@@ -189,7 +188,6 @@ public:
           case sf::Event::MouseButtonReleased:
             if (event.mouseButton.button == sf::Mouse::Left) {
               mouseClick = false;
-              std::cout << "DISABLED\n";
             }
             break;
           default:
@@ -208,8 +206,6 @@ public:
 
       window.draw(text);
       
-      std::cout << state << "\n";
-
       window.display();
       clearStates();
       if (gameActive) {
