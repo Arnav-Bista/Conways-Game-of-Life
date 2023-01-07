@@ -105,7 +105,7 @@ public:
     ACTIVE = sf::Color(247, 179, 43);
     BLEND = sf::Color(118,52,90);
     INACTIVE = sf::Color(243,243,244);
-    BACKGROUND = sf::Color(10, 9, 8);
+    BACKGROUND = sf::Color(29, 52, 97);
 
     affected = std::vector<bool>(SIZE*SIZE, false);
     drawTable = std::vector<sf::RectangleShape>(
@@ -152,6 +152,16 @@ public:
       );
     window.setFramerateLimit(144);
 
+    sf::Font font;
+    if(!font.loadFromFile("FiraCodeNF.ttf")) {
+      std::cout << "ERROR LOADING FONTS\n";
+      return;
+    }
+    sf::Text text;
+    text.setFont(font);
+    text.setString("SIMULATION PAUSED");
+    text.setCharacterSize(48);
+    text.setFillColor(sf::Color::White);
     while (window.isOpen()) {
       sf::Event event;
       sf::Vector2i position = sf::Mouse::getPosition(window);
@@ -165,6 +175,7 @@ public:
             switch (event.key.code) {
               case sf::Keyboard::Space:
                 gameActive = !gameActive;
+                text.setString(gameActive ? "SIMULATION RUNNING" : "SIMULATION PAUSED");
               default:
                 break;
             }
@@ -194,6 +205,8 @@ public:
       for(sf::RectangleShape rect : drawTable) {
         window.draw(rect);
       }
+
+      window.draw(text);
       
       std::cout << state << "\n";
 
