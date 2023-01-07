@@ -41,4 +41,5 @@ You should then have an executable called `ConwaysGameOfLife`.
 The usage of this application is fairly simple.
 
 The `<SPACE>` key pauses and unpauses the simulation.
+
 Use `<MOUSE LEFT CLICK>` to change the state of the cells. Dragging is supported.
