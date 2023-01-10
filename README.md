@@ -34,6 +34,8 @@ g++ -c main.cpp
 g++ main.o -o ConwaysGameOfLife -lsfml-graphics -lsfml-window -lsfml-system
 ```
 
+Keep in mind that this does assume you have the SFML library installed. See [SFML](https://www.sfml-dev.org/index.php) to see how to install it in your machine. 
+
 You should then have an executable called `ConwaysGameOfLife`.
 
 ### Usage
